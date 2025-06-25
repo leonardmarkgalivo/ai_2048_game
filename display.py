@@ -1,23 +1,26 @@
-# Import tkinter and game_board
-# Define Display class inheriting from Frame
+from tkinter import Frame, Label, CENTER
+from game_functions import GameBoard
+from game_ai import GameAI
 
-# Constructor:
-#   - Set up window title
-#   - Initialize GameBoard object
-#   - Build GUI grid
-#   - Update tiles
-#   - Bind keyboard events
+EDGE_LENGTH = 400
+CELL_COUNT = 4
+CELL_PAD = 10
 
-# Function to build 4x4 grid using Frame and Label widgets
+UP_KEY = "'w'"
+DOWN_KEY = "'s'"
+LEFT_KEY = "'a'"
+RIGHT_KEY = "'d'"
+AI_KEY = "'q'"
+AI_PLAY_KEY = "'p'"
 
-# Function to update grid from the GameBoard state:
-#   - For each tile:
-#     - If zero, show empty cell
-#     - Else, show value with color
+LABEL_FONT = ("Verdana", 40, "bold")
+GAME_COLOR = "#a6bdbb"
+EMPTY_COLOR = "#8eaba8"
 
-# Key handler function:
-#   - Map keys 'w', 'a', 's', 'd' to directions
-#   - Call GameBoard move method
-#   - If moved, update the grid
-#   - If 2048 reached, print win
-#   - If no moves left, print game over
+TILE_COLORS = {
+    2: "#daeddf", 4: "#9ae3ae", 8: "#6ce68d", 16: "#42ed71",
+    32: "#17e650", 64: "#17c246", 128: "#149938", 256: "#107d2e",
+    512: "#0e6325", 1024: "#0b4a1c", 2048: "#031f0a", 4096: "#000000", 8192: "#000000"
+}
+
+
