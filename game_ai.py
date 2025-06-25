@@ -1,21 +1,16 @@
-# Import necessary functions from game_functions
-# Set constants for move parameters (e.g., number of searches, length)
+import numpy as np
+from game_functions import GameBoard
 
-# Define function to get search parameters based on move count
+class GameAI:
+    def __init__(self, search_multiplier=10, length_multiplier=4, search_interval=200):
+        self.search_multiplier = search_multiplier
+        self.length_multiplier = length_multiplier
+        self.search_interval = search_interval
 
-# Define function to simulate AI's best move:
-#   - Loop over all 4 directions
-#   - Simulate each move
-#   - Add new tile if move was successful
-#   - Run many simulated random moves to evaluate future score
-#   - Store the average score for each direction
-#   - Return the board state with the best move applied
-
-# Define function to simulate a full game using AI:
-#   - Loop until no moves are valid or 2048 is reached
-#   - At each turn, calculate best move using AI
-#   - Add tile and continue
-#   - Print board and move count each turn
-#   - Return max score reached
-
-# Optional: define plotting function to show AI performance over many runs.
+    def _calculate_search_depth(self, move_count):
+        simulations = self.search_multiplier * (1 + (move_count // self.search_interval))
+        depth = self.length_multiplier * (1 + (move_count // self.search_interval))
+        return simulations, depth
+        
+        
+        

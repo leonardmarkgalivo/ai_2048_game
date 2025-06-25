@@ -74,7 +74,3 @@ class GameBoard:
             if not np.array_equal(rotated, merged):
                 return False
         return True
-
-
-        
-
