@@ -86,4 +86,34 @@ class Display(Frame):
                         fg=LABEL_COLORS[tile_value])
         self.update_idletasks()
 
+    def key_press(self, event):
+        key = repr(event.char)
+
+        if key == AI_KEY:
+            self.board.board, _ = self.ai.find_best_move(self.board.board)
+            self.board.board = self.board.add_tile()
+            self.update_display()
+
+        elif key == AI_PLAY_KEY:
+            valid = True
+            while valid:
+                self.board.board, valid = self.ai.find_best_move(self.board.board)
+                if valid:
+                    self.board.board = self.board.add_tile()
+                    self.update_display()
+
+        elif key in self.commands:
+            self.board.board, moved, _ = self.commands[key](self.board.board)
+            if moved:
+                self.board.board = self.board.add_tile()
+                self.update_display()
+
+
+game = Display()
+
+                    
+                    
+                
+                
+
 
