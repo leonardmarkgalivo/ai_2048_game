@@ -23,4 +23,24 @@ TILE_COLORS = {
     512: "#0e6325", 1024: "#0b4a1c", 2048: "#031f0a", 4096: "#000000", 8192: "#000000"
 }
 
+LABEL_COLORS = {
+    2: "#011c08", 4: "#011c08", 8: "#011c08", 16: "#011c08",
+    32: "#011c08", 64: "#f2f2f0", 128: "#f2f2f0",
+    256: "#f2f2f0", 512: "#f2f2f0", 1024: "#f2f2f0",
+    2048: "#f2f2f0", 4096: "#f2f2f0", 8192: "#f2f2f0"
+}
 
+class Display(Frame):
+    def __init__(self):
+        Frame.__init__(self)
+        self.grid()
+        self.master.title('2048')
+        self.master.bind("<Key>", self.key_press)
+
+        self.commands = {
+            UP_KEY: GameBoard.move_up,
+            DOWN_KEY: GameBoard.move_down,
+            LEFT_KEY: GameBoard.move_left,
+            RIGHT_KEY: GameBoard.move_right,
+            AI_KEY: GameAI().ai_move,
+        }
