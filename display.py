@@ -44,3 +44,46 @@ class Display(Frame):
             RIGHT_KEY: GameBoard.move_right,
             AI_KEY: GameAI().ai_move,
         }
+
+        self.grid_cells = []
+        self.board = GameBoard()
+        self.ai = GameAI()
+
+        self.build_grid()
+        self.update_display()
+        self.mainloop()
+
+    def build_grid(self):
+        background = Frame(self, bg=GAME_COLOR,
+                           width=EDGE_LENGTH, height=EDGE_LENGTH)
+        background.grid()
+
+        for row in range(CELL_COUNT):
+            grid_row = []
+            for col in range(CELL_COUNT):
+                cell = Frame(background, bg=EMPTY_COLOR,
+                             width=EDGE_LENGTH / CELL_COUNT,
+                             height=EDGE_LENGTH / CELL_COUNT)
+                cell.grid(row=row, column=col, padx=CELL_PAD,
+                          pady=CELL_PAD)
+                t = Label(master=cell, text="",
+                          bg=EMPTY_COLOR,
+                          justify=CENTER, font=LABEL_FONT, width=5, height=2)
+                t.grid()
+                grid_row.append(t)
+            self.grid_cells.append(grid_row)
+
+    def update_display(self):
+        for row in range(CELL_COUNT):
+            for col in range(CELL_COUNT):
+                tile_value = self.board.board[row][col]
+                if not tile_value:
+                    self.grid_cells[row][col].configure(
+                        text="", bg=EMPTY_COLOR)
+                else:
+                    self.grid_cells[row][col].configure(text=str(
+                        tile_value), bg=TILE_COLORS[tile_value],
+                        fg=LABEL_COLORS[tile_value])
+        self.update_idletasks()
+
+
