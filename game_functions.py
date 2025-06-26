@@ -56,7 +56,7 @@ class Game2048:
     def process_move_direction(self, board_state):
         board_after_slide, slide_change = self.slide_tiles_right(board_state)
         board_after_merge, merge_change, move_score = self.merge_adjacent_tiles(board_after_slide)
-        board_final, _ = self.slide_tiles_right(board_after_merge)
+        board_final, slide_changed = self.slide_tiles_right(board_after_merge)
         return board_final, (slide_change or merge_change), move_score
 
     def execute_move(self, direction_code):
@@ -77,8 +77,8 @@ class Game2048:
         for direction in range(4):
             test_board = np.copy(self.game_board)
             rotated_board = np.rot90(test_board, {0: 2, 1: -1, 2: 0, 3: 1}[direction])
-            slid_board, _ = self.slide_tiles_right(rotated_board)
-            merged_board, _, _ = self.merge_adjacent_tiles(slid_board)
+            slid_board, slide_changed = self.slide_tiles_right(rotated_board)
+            merged_board, slide_changed, slide_changed = self.merge_adjacent_tiles(slid_board)
             if not np.array_equal(rotated_board, merged_board):
                 return False
         return True

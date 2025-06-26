@@ -42,16 +42,16 @@ class GameAI:
     def simulate_move(self, board_state, direction_code):
         rotation_mapping = {0: 2, 1: -1, 2: 0, 3: 1}
         rotated_board = np.rot90(board_state, rotation_mapping[direction_code])
-        slid_board, _ = self.slide_tiles_right(rotated_board)
-        merged_board, _, _ = self.merge_tiles(slid_board)
-        result_board, _ = self.slide_tiles_right(merged_board)
+        slid_board, slide_changed = self.slide_tiles_right(rotated_board)
+        merged_board, slide_changed, slide_changed = self.merge_tiles(slid_board)
+        result_board, slide_changed = self.slide_tiles_right(merged_board)
         final_board = np.rot90(result_board, -rotation_mapping[direction_code])
         return final_board, not np.array_equal(board_state, final_board)
 
     def perform_random_move(self, board_state):
         valid_moves = []
         for direction in range(4):
-            _, move_valid = self.simulate_move(board_state, direction)
+            slide_changed, move_valid = self.simulate_move(board_state, direction)
             if move_valid:
                 valid_moves.append(direction)
         
@@ -59,7 +59,7 @@ class GameAI:
             return False
             
         chosen_direction = random.choice(valid_moves)
-        board_state[:], _ = self.simulate_move(board_state, chosen_direction)
+        board_state[:], slide_changed = self.simulate_move(board_state, chosen_direction)
         return True
 
     def evaluate_board_state(self, board_state):
